@@ -5,46 +5,115 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>User Registration</title>
 <style>
-  body { font-family: Arial, sans-serif; max-width: 400px; margin: auto; }
-  label { display: block; margin-top: 10px; }
-  input { width: 100%; padding: 8px; margin-top: 5px; }
-  .error { color: red; font-size: 0.9em; }
-  .strength { height: 8px; margin-top: 5px; background: #ccc; border-radius: 4px; }
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #6dd5fa, #2980b9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .container {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2980b9;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+    color: #333;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.2s;
+  }
+
+  input:focus {
+    border-color: #2980b9;
+    outline: none;
+    box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #2980b9;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    margin-top: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #1f6694;
+  }
+
+  .error {
+    color: red;
+    font-size: 0.85em;
+    margin-top: 2px;
+  }
+
+  .strength {
+    height: 8px;
+    margin-top: 5px;
+    background: #ccc;
+    border-radius: 4px;
+    transition: 0.3s;
+  }
 </style>
 </head>
 <body>
 
+<div class="container">
 <h2>User Registration</h2>
 
 <form id="registrationForm" novalidate>
-  <!-- Name -->
   <label for="name">Full Name:</label>
   <input type="text" id="name" name="name" placeholder="John Doe" required>
   <div id="nameError" class="error"></div>
 
-  <!-- Email -->
   <label for="email">Email:</label>
   <input type="email" id="email" name="email" placeholder="example@email.com" required>
   <div id="emailError" class="error"></div>
 
-  <!-- Password -->
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" required minlength="6">
   <div class="strength" id="strengthBar"></div>
   <div id="passwordError" class="error"></div>
 
-  <!-- Confirm Password -->
   <label for="confirmPassword">Confirm Password:</label>
   <input type="password" id="confirmPassword" name="confirmPassword" required>
   <div id="confirmError" class="error"></div>
 
-  <!-- Phone -->
   <label for="phone">Phone Number:</label>
   <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="10 digits" required>
   <div id="phoneError" class="error"></div>
 
-  <button type="submit" style="margin-top: 15px;">Register</button>
+  <button type="submit">Register</button>
 </form>
+</div>
 
 <script>
 const form = document.getElementById('registrationForm');
@@ -71,38 +140,31 @@ document.getElementById('password').addEventListener('input', e => {
 });
 
 form.addEventListener('submit', e => {
-  e.preventDefault(); // prevent form submission until validation passes
+  e.preventDefault(); 
 
   let valid = true;
-
-  // Clear all errors first
   document.querySelectorAll('.error').forEach(el => el.textContent = "");
 
-  // Name
   if (!form.name.value.trim()) {
     showError('nameError', 'Name is required.');
     valid = false;
   }
 
-  // Email
   if (!form.email.checkValidity()) {
     showError('emailError', 'Enter a valid email address.');
     valid = false;
   }
 
-  // Password
   if (form.password.value.length < 6) {
     showError('passwordError', 'Password must be at least 6 characters.');
     valid = false;
   }
 
-  // Confirm password
   if (form.password.value !== form.confirmPassword.value) {
     showError('confirmError', 'Passwords do not match.');
     valid = false;
   }
 
-  // Phone
   if (!form.phone.checkValidity()) {
     showError('phoneError', 'Enter a valid 10-digit phone number.');
     valid = false;
